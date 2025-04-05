@@ -1,0 +1,8 @@
+{
+  "name": "@devops-gaming/devops-gaming",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "name": "devops-gaming"
+  }
+}
