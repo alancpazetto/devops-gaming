@@ -9,12 +9,6 @@ import {
   LuChevronLeft,
   LuChevronRight,
 } from 'react-icons/lu';
-import {
-  Sandpack,
-  SandpackCodeEditor,
-  SandpackLayout,
-  SandpackProvider,
-} from '@codesandbox/sandpack-react';
 
 const example = `name: Example
 
@@ -24,40 +18,12 @@ on:
       - main
 `;
 
-const files = {
-  'index.js': {
-    name: 'index.js',
-    language: yaml(),
-    content: example,
-  },
-  'utils.js': {
-    name: 'utils.js',
-    language: yaml(),
-    content: example,
-  },
-};
-
 export function Home() {
   const [value, setValue] = useState('# arquivo yaml');
   const onChange = useCallback((val: SetStateAction<string>) => {
     console.log('val:', val);
     setValue(val);
   }, []);
-
-  const [activeFile, setActiveFile] = useState('index.js');
-  const [fileContents, setFileContents] = useState(files);
-
-  const handleChange = (value) => {
-    setFileContents((prev) => ({
-      ...prev,
-      [activeFile]: {
-        ...prev[activeFile],
-        content: value,
-      },
-    }));
-  };
-
-  const currentFile = fileContents[activeFile];
 
   return (
     <div className="w-screen h-screen flex overflow-hidden">
@@ -120,22 +86,6 @@ export function Home() {
         </div>
       </div>
       <div className="flex-1">
-        <div className="flex space-x-2 px-1 pt-2 bg-[#2d2d2d] border-b border-[#3c3c3c]">
-          {Object.keys(files).map((file) => (
-            <button
-              key={file}
-              onClick={() => setActiveFile(file)}
-              className={`px-4 py-1  text-sm transition-all duration-150
-              ${
-                file === activeFile
-                  ? 'bg-[#1e1e1e] text-white border-l border-r border-t border-[#3c3c3c]'
-                  : 'bg-[#2d2d2d] text-gray-400 hover:text-white'
-              }`}
-            >
-              {file}
-            </button>
-          ))}
-        </div>
         <ReactCodeMirror
           value={value}
           height="100%"
