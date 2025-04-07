@@ -9,12 +9,8 @@ import {
   LuChevronLeft,
   LuChevronRight,
 } from 'react-icons/lu';
-import {
-  Sandpack,
-  SandpackCodeEditor,
-  SandpackLayout,
-  SandpackProvider,
-} from '@codesandbox/sandpack-react';
+
+import * as m from '../../../paraglide/messages';
 
 const example = `name: Example
 
@@ -33,7 +29,7 @@ const files = {
   'utils.js': {
     name: 'utils.js',
     language: yaml(),
-    content: example,
+    content: `example: test`,
   },
 };
 
@@ -57,13 +53,15 @@ export function Home() {
     }));
   };
 
-  const currentFile = fileContents[activeFile];
+  const currentFile = files[activeFile] as any;
 
   return (
     <div className="w-screen h-screen flex overflow-hidden">
       <div className="flex-1 overflow-y-auto bg-gray-100">
         <div className="flex justify-around items-center w-full p-5">
-          <h1 className="text-2xl flex-1 font-bold">Welcome</h1>
+          <h1 className="text-2xl flex-1 font-bold">
+            Welcome {m.example_message({ username: 'asdasdas' })}
+          </h1>
           <div className="w-fit flex justify-around gap-4">
             <div className="inline-flex rounded-md shadow-xs" role="group">
               <button
@@ -137,7 +135,7 @@ export function Home() {
           ))}
         </div>
         <ReactCodeMirror
-          value={value}
+          value={currentFile.content}
           height="100%"
           style={{
             height: '100vh',

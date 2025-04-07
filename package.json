@@ -2,7 +2,9 @@
   "name": "@devops-gaming/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "machine-translate": "inlang machine translate --project project.inlang"
+  },
   "private": true,
   "dependencies": {
     "@codemirror/lang-javascript": "^6.2.3",
