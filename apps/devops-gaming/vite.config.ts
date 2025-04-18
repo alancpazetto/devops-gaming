@@ -24,6 +24,7 @@ export default defineConfig(async () => {
       }),
       react(),
     ],
+    assetsInclude: ['**/*.md'],
     // Uncomment this if you are using workers.
     // worker: {
     //  plugins: [ nxViteTsPaths() ],

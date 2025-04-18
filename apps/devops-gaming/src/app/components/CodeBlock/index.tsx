@@ -13,7 +13,7 @@ export function CodeBlock({ value }: CodeBlockProps) {
       extensions={[yaml()]}
       theme={dracula}
       editable={false}
-      className="rounded-xl overflow-hidden my-5"
+      className="rounded-md overflow-hidden my-5"
     />
   );
 }

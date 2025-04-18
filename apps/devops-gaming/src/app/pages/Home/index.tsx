@@ -1,16 +1,19 @@
 import { yaml } from '@codemirror/lang-yaml';
 import { dracula } from '@uiw/codemirror-theme-dracula';
 import ReactCodeMirror from '@uiw/react-codemirror';
-import { SetStateAction, useCallback, useState } from 'react';
-import { CodeBlock } from '../../components/CodeBlock';
 import {
-  LuArrowLeft,
-  LuArrowRight,
-  LuChevronLeft,
-  LuChevronRight,
-} from 'react-icons/lu';
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
+import { Markdown } from '../../components/Markdown';
 
-import * as m from '../../../paraglide/messages';
+import { getLocale } from '../../../paraglide/runtime';
+import { useStepsProvider } from '../../providers/StepsProvider';
+import { LoadingSkeleton } from '../../components/LoadingSkeleton';
 
 const example = `name: Example
 
@@ -20,20 +23,41 @@ on:
       - main
 `;
 
-const files = {
+type File = {
+  name: string;
+  path: string;
+  language: ReturnType<typeof yaml>;
+  content: string;
+};
+
+const files: Record<string, File> = {
   'index.js': {
-    name: 'index.js',
+    name: 'test.yaml',
+    path: '.gtihub/workflows/',
     language: yaml(),
     content: example,
   },
   'utils.js': {
     name: 'utils.js',
+    path: './',
     language: yaml(),
     content: `example: test`,
   },
 };
 
+const content = `O GitHub Actions é uma poderosa ferramenta de automação que permite que você crie pipelines de CI/CD diretamente no seu repositório GitHub.
+
+Isso significa que você pode rodar testes, builds, deploys e muito mais automaticamente, toda vez que algo acontece no seu código — como um \`push\` ou um \`merge pull request\`.
+
+\`\`\`yaml
+name: Example
+\`\`\`
+
+`;
+
 export function Home() {
+  const { currentMarkdown } = useStepsProvider();
+
   const [value, setValue] = useState('# arquivo yaml');
   const onChange = useCallback((val: SetStateAction<string>) => {
     console.log('val:', val);
@@ -53,15 +77,28 @@ export function Home() {
     }));
   };
 
-  const currentFile = files[activeFile] as any;
+  const currentFile = files[activeFile];
+  const locale = getLocale();
+
+  const [mark, setMark] = useState('');
+
+  useEffect(() => {
+    import(`../../steps/${locale}/1/content.md?raw`).then((res) => {
+      setMark(res.default);
+    });
+  }, [locale]);
 
   return (
     <div className="w-screen h-screen flex overflow-hidden">
-      <div className="flex-1 overflow-y-auto bg-gray-100">
-        <div className="flex justify-around items-center w-full p-5">
-          <h1 className="text-2xl flex-1 font-bold">
-            Welcome {m.example_message({ username: 'asdasdas' })}
-          </h1>
+      <div className="flex-1 overflow-y-auto flex flex-col h-full bg-gray-100 relative p-5 gap-10">
+        <div className="flex justify-around items-center w-full">
+          <div className="flex flex-col items-start gap-2 flex-1">
+            <span className="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-gray-300">
+              1. Fundamentos
+            </span>
+
+            <h1 className="text-2xl font-bold">O que é GitHub Actions?</h1>
+          </div>
           <div className="w-fit flex justify-around gap-4">
             <div className="inline-flex rounded-md shadow-xs" role="group">
               <button
@@ -82,22 +119,12 @@ export function Home() {
             </div>
           </div>
         </div>
-        <div className="p-5">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Necessitatibus, ad consectetur eaque natus aliquid cupiditate sint,
-            eveniet, molestias voluptatibus voluptatem iusto placeat eligendi
-            facere labore perferendis! Cum non saepe inventore?
-          </p>
-
-          <CodeBlock value={example} />
-
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
-            nihil quia odio quam quidem quisquam similique dignissimos, ipsam
-            porro! Harum recusandae adipisci impedit, corrupti rerum explicabo
-            aperiam cupiditate dicta earum.
-          </p>
+        <div className="flex-1 tutorial-content">
+          {currentMarkdown !== '' ? (
+            <LoadingSkeleton />
+          ) : (
+            <Markdown>{currentMarkdown}</Markdown>
+          )}
 
           <div className="mt-16 flex justify-end gap-4">
             <button
@@ -116,6 +143,7 @@ export function Home() {
             </button>
           </div>
         </div>
+        <div className="">asd</div>
       </div>
       <div className="flex-1">
         <div className="flex space-x-2 px-1 pt-2 bg-[#2d2d2d] border-b border-[#3c3c3c]">
@@ -130,7 +158,8 @@ export function Home() {
                   : 'bg-[#2d2d2d] text-gray-400 hover:text-white'
               }`}
             >
-              {file}
+              <span className="opacity-70">{files[file].path}</span>
+              {files[file].name}
             </button>
           ))}
         </div>
