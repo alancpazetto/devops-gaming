@@ -1,18 +1,18 @@
 [
   {
-    "comment": "",
+    "comment": "Here we define the name of our workflow",
     "content": "name: Hello world"
   },
   {
-    "comment": "Trigger the workflow on push or pull request\nAnother line of comment\nAnother line of comment222\nAnother line of comment2233234",
+    "comment": "Here we define how the workflow should be executed",
     "content": "on:\n  push:\n    branches:\n      - main"
   },
   {
-    "comment": "A workflow run is made up of one or more jobs that can run sequentially or in parallel",
+    "comment": "And here we define the steps that the workflow should execute",
     "content": "jobs:\n  hello-world:"
   },
   {
-    "comment": "The type of runner that the job will run on",
+    "comment": "Now we define the runner that the job will run on",
     "content": "    runs-on: ubuntu-latest\n    steps:\n      - name: Hello world\n        run: echo \"Hello world\"\n      - name: Test"
   },
   {

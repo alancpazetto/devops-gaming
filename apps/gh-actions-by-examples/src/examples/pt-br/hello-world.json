@@ -1,0 +1,22 @@
+[
+  {
+    "comment": "Aqui definimos o nome do nosso workflow",
+    "content": "name: Olá meu mundão!"
+  },
+  {
+    "comment": "Definimos como o workflow deve ser executado",
+    "content": "on:\n  push:\n    branches:\n      - main"
+  },
+  {
+    "comment": "Definimos as etapas que o workflow deve executar",
+    "content": "jobs:\n  hello-world:"
+  },
+  {
+    "comment": "Aqui será definido o runner que o job irá rodar",
+    "content": "    runs-on: ubuntu-latest\n    steps:\n      - name: Hello world\n        run: echo \"Hello world\"\n      - name: Test"
+  },
+  {
+    "comment": "Aqui podemos usar multiplas linhas",
+    "content": "        run: |\n          ls -all\n          echo \"Hello world\""
+  }
+]

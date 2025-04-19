@@ -8,11 +8,22 @@
   "targets": {
     "build-examples": {
       "executor": "nx:run-commands",
+      "configurations": {
+        "watch": {
+          "commands": [
+            "nodemon --watch {projectRoot}/scripts/build-examples.mjs {projectRoot}/scripts/build-examples.mjs"
+          ]
+        }
+      },
       "options": {
-        "commands": [
-          "nodemon --watch {projectRoot}/scripts/build-examples.mjs {projectRoot}/scripts/build-examples.mjs"
-        ]
+        "commands": ["node {projectRoot}/scripts/build-examples.mjs"]
       }
+    },
+    "build": {
+      "dependsOn": ["build-examples"]
+    },
+    "serve": {
+      "dependsOn": ["build-examples"]
     }
   }
 }

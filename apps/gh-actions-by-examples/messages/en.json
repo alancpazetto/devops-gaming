@@ -1,6 +1,5 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
-  "example_message": "Hello world {username}",
   "title": "GitHub Actions by Examples",
   "locale-pt-br": "Português (Brasil)",
   "locale-en": "English",

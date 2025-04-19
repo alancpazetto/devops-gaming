@@ -1,0 +1,23 @@
+# Aqui definimos o nome do nosso workflow
+name: Olá meu mundão!
+
+# Definimos como o workflow deve ser executado
+on:
+  push:
+    branches:
+      - main
+
+# Definimos as etapas que o workflow deve executar
+jobs:
+  hello-world:
+    # Aqui será definido o runner que o job irá rodar
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hello world
+        run: echo "Hello world"
+
+      - name: Test
+        # Aqui podemos usar multiplas linhas
+        run: |
+          ls -all
+          echo "Hello world"

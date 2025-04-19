@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
-    "rootDir": "./",
+    "rootDir": ".",
+    "baseUrl": ".",
     "composite": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
@@ -19,6 +19,10 @@
     "strict": true,
     "target": "es2022",
     "customConditions": ["development"],
-    "paths": {}
+    "paths": {
+      "@devops-gaming/shared-components": [
+        "libs/shared-components/src/index.ts"
+      ]
+    }
   }
 }
